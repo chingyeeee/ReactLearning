@@ -72,7 +72,7 @@ const root = ReactDOM.createRoot(document.querySelector("#root"));
 // }
 // root.render(<App />); //因為不會有子層 可以直接寫<App />
 
-// 08-Componenet-map1
+// 08-Component-map1
 // const numbers = [1, 2, 3, 4, 5];
 // const numberList = numbers.map((num, i) => (
 //   <li key={i}>
