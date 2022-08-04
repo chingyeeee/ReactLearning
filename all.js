@@ -39,17 +39,35 @@ const root = ReactDOM.createRoot(document.querySelector("#root"));
 // root.render(element);
 
 // 06-Component-props
+// function Welcome(props) {
+//   let sayHelloTimes = 1;
+//   return (
+//     <div>
+//       <h1>
+//         Hello, I am {props.name}, and {props.age} year-old now, greeting to you{" "}
+//         {sayHelloTimes} :)
+//       </h1>
+//       <input type="button" value="greet" />
+//     </div>
+//   );
+// }
+// const element = <Welcome name="summer" age="6"></Welcome>;
+// root.render(element);
+
+// 07-Component-建立App模組，來組合component
 function Welcome(props) {
-  let sayHelloTimes = 1;
+  return (
+    <h1>
+      Hello, I am {props.name}, and {props.age} year-old now
+    </h1>
+  );
+}
+function App() {
   return (
     <div>
-      <h1>
-        Hello, I am {props.name}, and {props.age} year-old now, greeting to you{" "}
-        {sayHelloTimes} :)
-      </h1>
-      <input type="button" value="greet" />
+      <Welcome name="Mary" age="2"></Welcome>
+      <Welcome name="Danny" age="7"></Welcome>
     </div>
   );
 }
-const element = <Welcome name="summer" age="6"></Welcome>;
-root.render(element);
+root.render(<App />); //因為不會有子層 可以直接寫<App />
