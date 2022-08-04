@@ -5,10 +5,16 @@ const root = ReactDOM.createRoot(document.querySelector("#root"));
 // root.render(<h1>Hello, {num}</h1>);
 
 // 02-JSX函式表達式
+// function callDogName() {
+//   return "rice ball";
+// }
+// const content = <h1>Hello {callDogName()}</h1>;
+// root.render(content);
+
+// 03-JSX 屬性設計
 function callDogName() {
   return "rice ball";
 }
-
-const content = <h1>Hello {callDogName()}</h1>;
-
+const dogColor = "red";
+const content = <h1 className={dogColor}>Hello {callDogName()}</h1>;
 root.render(content);
