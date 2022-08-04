@@ -12,9 +12,21 @@ const root = ReactDOM.createRoot(document.querySelector("#root"));
 // root.render(content);
 
 // 03-JSX 屬性設計
-function callDogName() {
-  return "rice ball";
+// function callDogName() {
+//   return "rice ball";
+// }
+// const dogColor = "red";
+// const content = <h1 className={dogColor}>Hello {callDogName()}</h1>;
+// root.render(content);
+
+// 04-Clock in React
+function tick() {
+  const element = (
+    <div>
+      <h1>Hello, world!</h1>
+      <p>The time now is {new Date().toLocaleTimeString()}</p>
+    </div>
+  );
+  root.render(element);
 }
-const dogColor = "red";
-const content = <h1 className={dogColor}>Hello {callDogName()}</h1>;
-root.render(content);
+setInterval(tick, 1000);
