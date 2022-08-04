@@ -32,8 +32,24 @@ const root = ReactDOM.createRoot(document.querySelector("#root"));
 // setInterval(tick, 1000);
 
 // 05-Component 首字母需大寫
-function Welcome() {
-  return <h1>Hello, how are you?</h1>;
+// function Welcome() {
+//   return <h1>Hello, how are you?</h1>;
+// }
+// const element = <Welcome></Welcome>; //component
+// root.render(element);
+
+// 06-Component-props
+function Welcome(props) {
+  let sayHelloTimes = 1;
+  return (
+    <div>
+      <h1>
+        Hello, I am {props.name}, and {props.age} year-old now, greeting to you{" "}
+        {sayHelloTimes} :)
+      </h1>
+      <input type="button" value="greet" />
+    </div>
+  );
 }
-const element = <Welcome></Welcome>; //component
+const element = <Welcome name="summer" age="6"></Welcome>;
 root.render(element);
