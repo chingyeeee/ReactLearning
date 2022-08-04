@@ -20,13 +20,20 @@ const root = ReactDOM.createRoot(document.querySelector("#root"));
 // root.render(content);
 
 // 04-Clock in React
-function tick() {
-  const element = (
-    <div>
-      <h1>Hello, world!</h1>
-      <p>The time now is {new Date().toLocaleTimeString()}</p>
-    </div>
-  );
-  root.render(element);
+// function tick() {
+//   const element = (
+//     <div>
+//       <h1>Hello, world!</h1>
+//       <p>The time now is {new Date().toLocaleTimeString()}</p>
+//     </div>
+//   );
+//   root.render(element);
+// }
+// setInterval(tick, 1000);
+
+// 05-Component 首字母需大寫
+function Welcome() {
+  return <h1>Hello, how are you?</h1>;
 }
-setInterval(tick, 1000);
+const element = <Welcome></Welcome>; //component
+root.render(element);
