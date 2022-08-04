@@ -82,10 +82,32 @@ const root = ReactDOM.createRoot(document.querySelector("#root"));
 // root.render(<ul>{numberList}</ul>);
 
 //09-Component-map1.2 少一個預括號
-const numbers = [1, 2, 3, 4, 5];
-const numberList = numbers.map((num, i) => (
+// const numbers = [1, 2, 3, 4, 5];
+// const numberList = numbers.map((num, i) => (
+//   <li key={i}>
+//     index:{i}, value:{num}
+//   </li>
+// ));
+// root.render(<ul>{numberList}</ul>);
+
+// 10-Component-map2-物件作法
+const queue = [
+  {
+    num: 1,
+    name: "TOM",
+  },
+  {
+    num: 2,
+    name: "APPLE",
+  },
+  {
+    num: 3,
+    name: "IRIS",
+  },
+];
+const numLists = queue.map((person, i) => (
   <li key={i}>
-    index:{i}, value:{num}
+    {person.num} : {person.name}
   </li>
 ));
-root.render(<ul>{numberList}</ul>);
+root.render(<ul>{numLists}</ul>);
