@@ -55,19 +55,28 @@ const root = ReactDOM.createRoot(document.querySelector("#root"));
 // root.render(element);
 
 // 07-Component-建立App模組，來組合component
-function Welcome(props) {
-  return (
-    <h1>
-      Hello, I am {props.name}, and {props.age} year-old now
-    </h1>
-  );
-}
-function App() {
-  return (
-    <div>
-      <Welcome name="Mary" age="2"></Welcome>
-      <Welcome name="Danny" age="7"></Welcome>
-    </div>
-  );
-}
-root.render(<App />); //因為不會有子層 可以直接寫<App />
+// function Welcome(props) {
+//   return (
+//     <h1>
+//       Hello, I am {props.name}, and {props.age} year-old now
+//     </h1>
+//   );
+// }
+// function App() {
+//   return (
+//     <div>
+//       <Welcome name="Mary" age="2"></Welcome>
+//       <Welcome name="Danny" age="7"></Welcome>
+//     </div>
+//   );
+// }
+// root.render(<App />); //因為不會有子層 可以直接寫<App />
+
+// 08-Componenet-map1
+const numbers = [1, 2, 3, 4, 5];
+const numberList = numbers.map((num, i) => (
+  <li key={i}>
+    index:{i}, value:{num}
+  </li>
+));
+root.render(<ul>{numberList}</ul>);
