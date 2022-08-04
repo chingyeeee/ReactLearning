@@ -113,18 +113,40 @@ const root = ReactDOM.createRoot(document.querySelector("#root"));
 // root.render(<ul>{numLists}</ul>);
 
 // 11-Component-map2.1-物件作法
-const students = ["Tom", "Apple", "Iris"];
+// const students = ["Tom", "Apple", "Iris"];
+// function Welcome(props) {
+//   return <h1>Hello, I am {props.name}</h1>;
+// }
+// function App() {
+//   return (
+//     <div>
+//       {students.map((studentname, i) => {
+//         return <Welcome key={i} name={studentname} />;
+//       })}
+//     </div>
+//   );
+// }
+
+// root.render(<App />);
+
+// 12-Component-觀察變數有更新，但無法 render
 function Welcome(props) {
-  return <h1>Hello, I am {props.name}</h1>;
-}
-function App() {
+  let sayHello = 1;
   return (
     <div>
-      {students.map((studentname, i) => {
-        return <Welcome key={i} name={studentname} />;
-      })}
+      <h1>
+        Hello, I am {props.name}, and {props.age} year-old now, greeting to you{" "}
+        {sayHello} :)
+      </h1>
+      <input
+        type="button"
+        value="greet"
+        onClick={() => {
+          sayHello = sayHello + 1;
+        }}
+      />
     </div>
   );
 }
-
-root.render(<App />);
+const element = <Welcome name="Mary" age="3"></Welcome>;
+root.render(element);
