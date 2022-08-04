@@ -91,23 +91,40 @@ const root = ReactDOM.createRoot(document.querySelector("#root"));
 // root.render(<ul>{numberList}</ul>);
 
 // 10-Component-map2-物件作法
-const queue = [
-  {
-    num: 1,
-    name: "TOM",
-  },
-  {
-    num: 2,
-    name: "APPLE",
-  },
-  {
-    num: 3,
-    name: "IRIS",
-  },
-];
-const numLists = queue.map((person, i) => (
-  <li key={i}>
-    {person.num} : {person.name}
-  </li>
-));
-root.render(<ul>{numLists}</ul>);
+// const queue = [
+//   {
+//     num: 1,
+//     name: "TOM",
+//   },
+//   {
+//     num: 2,
+//     name: "APPLE",
+//   },
+//   {
+//     num: 3,
+//     name: "IRIS",
+//   },
+// ];
+// const numLists = queue.map((person, i) => (
+//   <li key={i}>
+//     {person.num} : {person.name}
+//   </li>
+// ));
+// root.render(<ul>{numLists}</ul>);
+
+// 11-Component-map2.1-物件作法
+const students = ["Tom", "Apple", "Iris"];
+function Welcome(props) {
+  return <h1>Hello, I am {props.name}</h1>;
+}
+function App() {
+  return (
+    <div>
+      {students.map((studentname, i) => {
+        return <Welcome key={i} name={studentname} />;
+      })}
+    </div>
+  );
+}
+
+root.render(<App />);
