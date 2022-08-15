@@ -191,8 +191,52 @@ const root = ReactDOM.createRoot(document.querySelector("#root"));
 // root.render(<App />);
 
 // 15-多個資料>單一模組(黑板)
+// const Board = function ({ product }) {
+//   return <h3 className="board">今日特價是{product}</h3>;
+// };
+
+// const Restaurant = function () {
+//   return (
+//     <>
+//       <h1>Restaurant</h1>
+//       <Board product="烤雞腿炒飯" />
+//     </>
+//   );
+// };
+
+// const Cafe = function ({ product }) {
+//   return (
+//     <>
+//       <h1>Cafe</h1>
+//       <Board product="草莓鬆餅" />
+//     </>
+//   );
+// };
+
+// const App = function () {
+//   return (
+//     <>
+//       <Restaurant />
+//       <Cafe />
+//     </>
+//   );
+// };
+
+// root.render(<App />);
+
+// 16-單一資料>多個模組(桌面、門口)
+const slogan = "用餐前請消毒雙手!";
+
 const Board = function ({ product }) {
   return <h3 className="board">今日特價是{product}</h3>;
+};
+
+const Door = function ({ slogan }) {
+  return <h4 className="door">Door Warning: {slogan}</h4>;
+};
+
+const Desk = function ({ slogan }) {
+  return <h4 className="desk">Desk Warning: {slogan}</h4>;
 };
 
 const Restaurant = function () {
@@ -200,6 +244,7 @@ const Restaurant = function () {
     <>
       <h1>Restaurant</h1>
       <Board product="烤雞腿炒飯" />
+      <Door slogan={slogan} />
     </>
   );
 };
@@ -209,6 +254,7 @@ const Cafe = function ({ product }) {
     <>
       <h1>Cafe</h1>
       <Board product="草莓鬆餅" />
+      <Desk slogan={slogan} />
     </>
   );
 };
