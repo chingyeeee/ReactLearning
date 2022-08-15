@@ -313,7 +313,7 @@ const root = ReactDOM.createRoot(document.querySelector("#root"));
 // };
 // root.render(<App />);
 
-// 18-彈跳視窗
+// 18-元件化彈跳視窗
 const Modal = function ({ btnText, modalText }) {
   return (
     <input value={btnText} type="button" onClick={(e) => alert(modalText)} />
