@@ -367,20 +367,52 @@ const { useState, useEffect } = React;
 // root.render(<App />);
 
 // 19-useEffect
-const CountArea = function () {
-  const [count, setCount] = useState(0);
-  const [value, setValue] = useState("");
+// const CountArea = function () {
+//   const [count, setCount] = useState(0);
+//   const [value, setValue] = useState("");
 
-  useEffect(() => {
-    console.log(`資料已點擊 ${count} 次`);
-  }, [count]);
+//   useEffect(() => {
+//     console.log(`資料已點擊 ${count} 次`);
+//   }, [count]);
 
+//   return (
+//     <div>
+//       <h1>{count}</h1>
+//       <button onClick={() => setCount(count + 1)}>Update</button>
+//     </div>
+//   );
+// };
+
+// root.render(<CountArea />);
+
+// 20-fetchAPI
+const Loading = function () {
+  return <p>資料載入中</p>;
+};
+const List = function ({ data }) {
+  // console.log(data);
   return (
-    <div>
-      <h1>{count}</h1>
-      <button onClick={() => setCount(count + 1)}>Update</button>
-    </div>
+    <ul>
+      {data.map((item, i) => {
+        return <li key={i}>{item.name}</li>;
+      })}
+    </ul>
   );
 };
+const App = function () {
+  const [data, setData] = useState(null);
 
-root.render(<CountArea />);
+  const fetchAPI = async function () {
+    const res = await fetch("https://pokeapi.co/api/v2/pokemon?limit=10");
+    const resJSON = await res.json();
+    setData(resJSON.results);
+  };
+
+  useEffect(() => {
+    fetchAPI();
+  }, []);
+
+  return <>{data ? <List data={data} /> : <Loading />}</>;
+};
+
+root.render(<App />);
