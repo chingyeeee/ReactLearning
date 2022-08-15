@@ -143,6 +143,7 @@ function Welcome(props) {
         value="greet"
         onClick={() => {
           sayHello = sayHello + 1;
+          // console.log(sayHello);
         }}
       />
     </div>
