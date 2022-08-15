@@ -172,20 +172,54 @@ const root = ReactDOM.createRoot(document.querySelector("#root"));
 // root.render(<App />);
 
 // 14-元件設計-一個餐廳有一個黑板
-const Board = function ({ slogan }) {
-  return <h3 className="board">{slogan}</h3>;
+// const Board = function ({ slogan }) {
+//   return <h3 className="board">{slogan}</h3>;
+// };
+
+// const Restaurant = function () {
+//   return (
+//     <>
+//       <Board slogan="今日特餐是烤雞腿炒飯" />
+//     </>
+//   );
+// };
+
+// const App = function () {
+//   return <Restaurant />;
+// };
+
+// root.render(<App />);
+
+// 15-多個資料>單一模組(黑板)
+const Board = function ({ product }) {
+  return <h3 className="board">今日特價是{product}</h3>;
 };
 
 const Restaurant = function () {
   return (
     <>
-      <Board slogan="今日特餐是烤雞腿炒飯" />
+      <h1>Restaurant</h1>
+      <Board product="烤雞腿炒飯" />
+    </>
+  );
+};
+
+const Cafe = function ({ product }) {
+  return (
+    <>
+      <h1>Cafe</h1>
+      <Board product="草莓鬆餅" />
     </>
   );
 };
 
 const App = function () {
-  return <Restaurant />;
+  return (
+    <>
+      <Restaurant />
+      <Cafe />
+    </>
+  );
 };
 
 root.render(<App />);
