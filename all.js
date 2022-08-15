@@ -130,24 +130,43 @@ const root = ReactDOM.createRoot(document.querySelector("#root"));
 // root.render(<App />);
 
 // 12-Component-觀察變數有更新，但無法 render
-function Welcome(props) {
-  let sayHello = 1;
+// function Welcome(props) {
+//   let sayHello = 1;
+//   return (
+//     <div>
+//       <h1>
+//         Hello, I am {props.name}, and {props.age} year-old now, greeting to you{" "}
+//         {sayHello} :)
+//       </h1>
+//       <input
+//         type="button"
+//         value="greet"
+//         onClick={() => {
+//           sayHello = sayHello + 1;
+//           // console.log(sayHello);
+//         }}
+//       />
+//     </div>
+//   );
+// }
+// const element = <Welcome name="Mary" age="3"></Welcome>;
+// root.render(element);
+
+// 13-元件設計-多個元件
+const students = ["Bob", "Mary", "Tom"];
+
+function Welcome({ name }) {
+  return <h1>Hello, I am {name}</h1>;
+}
+
+function App() {
   return (
     <div>
-      <h1>
-        Hello, I am {props.name}, and {props.age} year-old now, greeting to you{" "}
-        {sayHello} :)
-      </h1>
-      <input
-        type="button"
-        value="greet"
-        onClick={() => {
-          sayHello = sayHello + 1;
-          // console.log(sayHello);
-        }}
-      />
+      {students.map((student, index) => {
+        return <Welcome key={index} name={student} />;
+      })}
     </div>
   );
 }
-const element = <Welcome name="Mary" age="3"></Welcome>;
-root.render(element);
+
+root.render(<App />);
