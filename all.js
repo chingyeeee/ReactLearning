@@ -1,4 +1,5 @@
 const root = ReactDOM.createRoot(document.querySelector("#root"));
+const { useState, useEffect } = React;
 
 // 01-JSX大括號接受表達式
 // const num = 2;
@@ -314,53 +315,72 @@ const root = ReactDOM.createRoot(document.querySelector("#root"));
 // root.render(<App />);
 
 // 18-元件化彈跳視窗
-const Modal = function ({ btnText, modalText }) {
+// const Modal = function ({ btnText, modalText }) {
+//   return (
+//     <input value={btnText} type="button" onClick={(e) => alert(modalText)} />
+//   );
+// };
+// const CalcTotal = function ({ porductList }) {
+//   return <p>總共有 {porductList.length} 個產品</p>;
+// };
+// function Product() {
+//   const prodcutData = ["狗食", "貓食", "狗玩具", "貓玩具"];
+//   return (
+//     <>
+//       <h2>產品頁面</h2>
+//       <Modal btnText="向客戶打招呼" modalText="hi~ 妳好嗎？" />
+//       <ul>
+//         {prodcutData.map((item, i) => {
+//           return <li>{item} </li>;
+//         })}
+//       </ul>
+//       <CalcTotal porductList={prodcutData} />
+//     </>
+//   );
+// }
+// function Cart() {
+//   const cartData = ["狗食", "貓食"];
+//   return (
+//     <>
+//       <h2>購物車頁面</h2>
+//       <Modal
+//         btnText="向客戶鼓勵結帳"
+//         modalText="錢錢沒有不見，只是變成你喜歡的形狀！"
+//       />
+//       <ul>
+//         {cartData.map((item, i) => {
+//           return <li>{item}</li>;
+//         })}
+//       </ul>
+//       <CalcTotal porductList={cartData} />
+//     </>
+//   );
+// }
+// const App = function () {
+//   return (
+//     <>
+//       <Product />
+//       <Cart />
+//     </>
+//   );
+// };
+// root.render(<App />);
+
+// 19-useEffect
+const CountArea = function () {
+  const [count, setCount] = useState(0);
+  const [value, setValue] = useState("");
+
+  useEffect(() => {
+    console.log(`資料已點擊 ${count} 次`);
+  }, [count]);
+
   return (
-    <input value={btnText} type="button" onClick={(e) => alert(modalText)} />
+    <div>
+      <h1>{count}</h1>
+      <button onClick={() => setCount(count + 1)}>Update</button>
+    </div>
   );
 };
-const CalcTotal = function ({ porductList }) {
-  return <p>總共有 {porductList.length} 個產品</p>;
-};
-function Product() {
-  const prodcutData = ["狗食", "貓食", "狗玩具", "貓玩具"];
-  return (
-    <>
-      <h2>產品頁面</h2>
-      <Modal btnText="向客戶打招呼" modalText="hi~ 妳好嗎？" />
-      <ul>
-        {prodcutData.map((item, i) => {
-          return <li>{item} </li>;
-        })}
-      </ul>
-      <CalcTotal porductList={prodcutData} />
-    </>
-  );
-}
-function Cart() {
-  const cartData = ["狗食", "貓食"];
-  return (
-    <>
-      <h2>購物車頁面</h2>
-      <Modal
-        btnText="向客戶鼓勵結帳"
-        modalText="錢錢沒有不見，只是變成你喜歡的形狀！"
-      />
-      <ul>
-        {cartData.map((item, i) => {
-          return <li>{item}</li>;
-        })}
-      </ul>
-      <CalcTotal porductList={cartData} />
-    </>
-  );
-}
-const App = function () {
-  return (
-    <>
-      <Product />
-      <Cart />
-    </>
-  );
-};
-root.render(<App />);
+
+root.render(<CountArea />);
