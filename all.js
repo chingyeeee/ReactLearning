@@ -225,47 +225,90 @@ const root = ReactDOM.createRoot(document.querySelector("#root"));
 // root.render(<App />);
 
 // 16-單一資料>多個模組(桌面、門口)
-const slogan = "用餐前請消毒雙手!";
+// const slogan = "用餐前請消毒雙手!";
 
-const Board = function ({ product }) {
-  return <h3 className="board">今日特價是{product}</h3>;
+// const Board = function ({ product }) {
+//   return <h3 className="board">今日特價是{product}</h3>;
+// };
+
+// const Door = function ({ slogan }) {
+//   return <h4 className="door">Door Warning: {slogan}</h4>;
+// };
+
+// const Desk = function ({ slogan }) {
+//   return <h4 className="desk">Desk Warning: {slogan}</h4>;
+// };
+
+// const Restaurant = function () {
+//   return (
+//     <>
+//       <h1>Restaurant</h1>
+//       <Board product="烤雞腿炒飯" />
+//       <Door slogan={slogan} />
+//     </>
+//   );
+// };
+
+// const Cafe = function ({ product }) {
+//   return (
+//     <>
+//       <h1>Cafe</h1>
+//       <Board product="草莓鬆餅" />
+//       <Desk slogan={slogan} />
+//     </>
+//   );
+// };
+
+// const App = function () {
+//   return (
+//     <>
+//       <Restaurant />
+//       <Cafe />
+//     </>
+//   );
+// };
+
+// root.render(<App />);
+
+// 17-元件化購物車
+const CalcTotal = function ({ porductList }) {
+  return <p>總共有 {porductList.length} 個產品</p>;
 };
 
-const Door = function ({ slogan }) {
-  return <h4 className="door">Door Warning: {slogan}</h4>;
-};
-
-const Desk = function ({ slogan }) {
-  return <h4 className="desk">Desk Warning: {slogan}</h4>;
-};
-
-const Restaurant = function () {
+function Product() {
+  const prodcutData = ["狗食", "貓食", "狗玩具", "貓玩具"];
   return (
     <>
-      <h1>Restaurant</h1>
-      <Board product="烤雞腿炒飯" />
-      <Door slogan={slogan} />
+      <h2>產品頁面</h2>
+      <ul>
+        {prodcutData.map((item, i) => {
+          return <li>{item}</li>;
+        })}
+      </ul>
+      <CalcTotal porductList={prodcutData} />
     </>
   );
-};
-
-const Cafe = function ({ product }) {
+}
+function Cart() {
+  const cartData = ["狗食", "貓食"];
   return (
     <>
-      <h1>Cafe</h1>
-      <Board product="草莓鬆餅" />
-      <Desk slogan={slogan} />
+      <h2>購物車頁面</h2>
+      <ul>
+        {cartData.map((item, i) => {
+          return <li>{item}</li>;
+        })}
+      </ul>
+      <CalcTotal porductList={cartData} />
     </>
   );
-};
-
+}
 const App = function () {
   return (
     <>
-      <Restaurant />
-      <Cafe />
+      <Product />
+      <Cart />
     </>
   );
 };
-
 root.render(<App />);
