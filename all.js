@@ -153,20 +153,39 @@ const root = ReactDOM.createRoot(document.querySelector("#root"));
 // root.render(element);
 
 // 13-元件設計-多個元件
-const students = ["Bob", "Mary", "Tom"];
+// const students = ["Bob", "Mary", "Tom"];
 
-function Welcome({ name }) {
-  return <h1>Hello, I am {name}</h1>;
-}
+// function Welcome({ name }) {
+//   return <h1>Hello, I am {name}</h1>;
+// }
 
-function App() {
+// function App() {
+//   return (
+//     <div>
+//       {students.map((student, index) => {
+//         return <Welcome key={index} name={student} />;
+//       })}
+//     </div>
+//   );
+// }
+
+// root.render(<App />);
+
+// 14-元件設計-一個餐廳有一個黑板
+const Board = function ({ slogan }) {
+  return <h3 className="board">{slogan}</h3>;
+};
+
+const Restaurant = function () {
   return (
-    <div>
-      {students.map((student, index) => {
-        return <Welcome key={index} name={student} />;
-      })}
-    </div>
+    <>
+      <Board slogan="今日特餐是烤雞腿炒飯" />
+    </>
   );
-}
+};
+
+const App = function () {
+  return <Restaurant />;
+};
 
 root.render(<App />);
