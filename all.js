@@ -386,33 +386,124 @@ const { useState, useEffect } = React;
 // root.render(<CountArea />);
 
 // 20-fetchAPI
-const Loading = function () {
-  return <p>資料載入中</p>;
-};
-const List = function ({ data }) {
-  // console.log(data);
+// const Loading = function () {
+//   return <p>資料載入中</p>;
+// };
+// const List = function ({ data }) {
+//   // console.log(data);
+//   return (
+//     <ul>
+//       {data.map((item, i) => {
+//         return <li key={i}>{item.name}</li>;
+//       })}
+//     </ul>
+//   );
+// };
+// const App = function () {
+//   const [data, setData] = useState(null);
+
+//   const fetchAPI = async function () {
+//     const res = await fetch("https://pokeapi.co/api/v2/pokemon?limit=10");
+//     const resJSON = await res.json();
+//     setData(resJSON.results);
+//   };
+
+//   useEffect(() => {
+//     fetchAPI();
+//   }, []);
+
+//   return <>{data ? <List data={data} /> : <Loading />}</>;
+// };
+
+// root.render(<App />);
+
+// 21-元件設計-電源開關
+const ShoppingMall = function () {
+  const [floorData, setFloorData] = useState([
+    { light: true, floor: 1 },
+    { light: true, floor: 2 },
+    { light: true, floor: 3 },
+    { light: true, floor: 4 },
+    { light: true, floor: 5 },
+    { light: true, floor: 6 },
+    { light: true, floor: 7 },
+  ]);
+
   return (
-    <ul>
-      {data.map((item, i) => {
-        return <li key={i}>{item.name}</li>;
-      })}
-    </ul>
+    <>
+      <h1>新光三越</h1>
+      <ul className="floor">
+        {floorData.map(({ light, floor }, index) => {
+          return (
+            <PowerSwitch
+              light={light}
+              floor={floor}
+              key={index}
+              floorData={floorData}
+              setFloorData={setFloorData}
+            />
+          );
+        })}
+      </ul>
+    </>
   );
 };
+
+const Office = function () {
+  const [floorData, setFloorData] = useState([
+    { light: true, floor: 1 },
+    { light: true, floor: 2 },
+    { light: true, floor: 3 },
+  ]);
+
+  return (
+    <>
+      <h1>公司</h1>
+      <ul className="floor">
+        {floorData.map(({ light, floor }, index) => {
+          return (
+            <PowerSwitch
+              light={light}
+              floor={floor}
+              key={index}
+              floorData={floorData}
+              setFloorData={setFloorData}
+            />
+          );
+        })}
+      </ul>
+    </>
+  );
+};
+
+const PowerSwitch = function ({ light, floor, floorData, setFloorData }) {
+  return (
+    <>
+      <li className={light ? "white" : "black"}>
+        Floor : {floor}
+        <button
+          className="btn-switch"
+          onClick={(e) => {
+            const newFloor = floorData.map((item) =>
+              item.floor === floor ? { ...item, light: !item.light } : item
+            );
+            setFloorData(newFloor);
+          }}
+        >
+          {light ? "off" : "on"}
+        </button>
+      </li>
+    </>
+  );
+};
+
 const App = function () {
-  const [data, setData] = useState(null);
-
-  const fetchAPI = async function () {
-    const res = await fetch("https://pokeapi.co/api/v2/pokemon?limit=10");
-    const resJSON = await res.json();
-    setData(resJSON.results);
-  };
-
-  useEffect(() => {
-    fetchAPI();
-  }, []);
-
-  return <>{data ? <List data={data} /> : <Loading />}</>;
+  return (
+    <>
+      <ShoppingMall />
+      <Office />
+    </>
+  );
 };
 
 root.render(<App />);
