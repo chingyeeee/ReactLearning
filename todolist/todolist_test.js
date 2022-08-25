@@ -1,18 +1,17 @@
 const { useState } = React;
 
 const App = function () {
-  const [todos, setTodos] = useState([
-    { id: 1661245640790, title: "把冰箱發霉的檸檬拿去丟", done: false },
-    { id: 1661245640791, title: "打電話叫媽媽匯款給我", done: false },
-    { id: 1661245640792, title: "整理電腦資料夾", done: false },
-    { id: 1661245640793, title: "繳電費水費瓦斯費", done: false },
-    { id: 1661245640794, title: "約vicky禮拜三泡溫泉", done: false },
-    { id: 1661245640795, title: "約ada禮拜四吃晚餐", done: false },
-  ]);
+  const [todos, setTodos] = useState([]);
 
   const [newTodo, setNewTodo] = useState("");
 
-  const [tabType, setTabType] = useState(1);
+  const [currentTab, setCurrentTab] = useState("all");
+
+  const [tabList, setTabList] = useState([
+    { type: "all", title: "全部" },
+    { type: "pending", title: "待完成" },
+    { type: "completed", title: "已完成" },
+  ]);
 
   //取得新TodoItem的title
   const handlerNewTodo = (e) => {
@@ -51,6 +50,24 @@ const App = function () {
     setTodos(newTodos);
   };
 
+  //切換頁籤status
+  const handlerTabType = (type) => {
+    setCurrentTab(type);
+  };
+
+  //頁籤active class
+  const activeTabType = (type) => {
+    return currentTab === type ? "active" : "";
+  };
+
+  //根據頁籤更換顯示todos
+  const filteredTodos = todos.filter((item) => {
+    if (currentTab === "pending") return !item.done;
+    if (currentTab === "completed") return item.done;
+
+    return item;
+  });
+
   return (
     <div id="todoListPage" className="bg-half">
       <nav>
@@ -76,22 +93,22 @@ const App = function () {
           <div className="todoList_list">
             {/* TabType */}
             <ul className="todoList_tab">
-              <li>
-                <a href="#" className="active">
-                  全部
-                </a>
-              </li>
-              <li>
-                <a href="#">待完成</a>
-              </li>
-              <li>
-                <a href="#">已完成</a>
-              </li>
+              {tabList.map((tab) => (
+                <li key={tab.type}>
+                  <a
+                    href="#"
+                    className={activeTabType(tab.type)}
+                    onClick={() => handlerTabType(tab.type)}
+                  >
+                    {tab.title}
+                  </a>
+                </li>
+              ))}
             </ul>
             {/* TodoItem */}
             <div className="todoList_items">
               <ul className="todoList_item">
-                {todos.map((item, i) => {
+                {filteredTodos.map((item, i) => {
                   return (
                     <li key={i}>
                       <label className="todoList_label">
