@@ -1,13 +1,30 @@
 const { useState } = React;
 
-const TodoInput = function ({ inputValue, handleInputValue, addTodo }) {
+// TodoInput元件
+const TodoInput = function ({ todos, setTodos }) {
+  const [newTodo, setNewTodo] = useState("");
+
+  //把新TodoItem加到原有的Todos
+  const addTodo = () => {
+    if (!newTodo) return;
+
+    setTodos([...todos, { id: Date.now(), title: newTodo, done: false }]);
+
+    setNewTodo("");
+  };
+
+  //取得新TodoItem的title
+  const handlerNewTodo = (e) => {
+    setNewTodo(e.target.value);
+  };
+
   return (
     <div className="inputBox">
       <input
         type="text"
         placeholder="請輸入待辦事項"
-        value={inputValue}
-        onChange={handleInputValue}
+        value={newTodo}
+        onChange={handlerNewTodo}
       />
       <a href="#" onClick={addTodo}>
         <i className="fa fa-plus"></i>
@@ -16,9 +33,59 @@ const TodoInput = function ({ inputValue, handleInputValue, addTodo }) {
   );
 };
 
+//TabBar元件
+const TabBar = function (props) {
+  const { currentTab, setCurrentTab } = props;
+
+  const tabList = [
+    { type: "all", title: "全部" },
+    { type: "pending", title: "待完成" },
+    { type: "completed", title: "已完成" },
+  ];
+
+  //切換頁籤status
+  const handlerTabType = (type) => {
+    setCurrentTab(type);
+  };
+
+  //頁籤active class
+  const activeTabType = (type) => {
+    return currentTab === type ? "active" : "";
+  };
+
+  return (
+    <ul className="todoList_tab">
+      {tabList.map((tab) => (
+        <li key={tab.type}>
+          <a
+            href="#"
+            className={activeTabType(tab.type)}
+            onClick={() => handlerTabType(tab.type)}
+          >
+            {tab.title}
+          </a>
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+//TodoItem元件
 const TodoItem = function (props) {
-  const { item, todos, setTodos, handleTodoState, removeTodo } = props;
-  const { createDate, todo, done } = item;
+  const { item, todos, setTodos } = props;
+  //切換checkbox state
+  const handlerTodoState = (id) => {
+    const newTodos = todos.map((item) =>
+      item.id === id ? { ...item, done: !item.done } : item
+    );
+    setTodos(newTodos);
+  };
+
+  //刪除todos
+  const delTodo = (id) => {
+    const newTodos = todos.filter((item) => item.id !== id);
+    setTodos(newTodos);
+  };
 
   return (
     <li>
@@ -26,105 +93,70 @@ const TodoItem = function (props) {
         <input
           className="todoList_input"
           type="checkbox"
-          value="true"
-          onChange={handleTodoState}
-          checked={done}
+          onChange={() => handlerTodoState(item.id)}
+          checked={item.done}
         />
-        <span>
-          {todo}
-          {done}
-        </span>
+        <span>{item.title}</span>
       </label>
-      <a href="#" onClick={removeTodo}>
-        <i data-id={createDate} className="fa fa-times"></i>
+      <a href="#" onClick={() => delTodo(item.id)}>
+        <i className="fa fa-times"></i>
       </a>
     </li>
   );
 };
 
 const TodoList = function () {
-  const [todos, setTodos] = useState([
-    { createDate: 202208180000, todo: "把冰箱發霉的檸檬拿去丟", done: false },
-    { createDate: 202208180001, todo: "打電話叫媽媽匯款給我", done: false },
-    { createDate: 202208180002, todo: "整理電腦資料夾", done: false },
-    { createDate: 202208180003, todo: "繳電費水費瓦斯費", done: false },
-    { createDate: 202208180004, todo: "約vicky禮拜三泡溫泉", done: false },
-    { createDate: 202208180005, todo: "約ada禮拜四吃晚餐", done: false },
-  ]);
+  const [todos, setTodos] = useState([]);
 
-  const [inputValue, setInputValue] = useState("");
+  const [currentTab, setCurrentTab] = useState("all");
 
-  // 監聽input value的變動
-  const handleInputValue = (e) => setInputValue(e.target.value);
+  // 計算已完成項目
+  const completedTodo = todos.filter((item) => item.done);
 
-  // 增加Todo
-  const addTodo = () => {
-    if (!inputValue) return;
-
-    setTodos([
-      ...todos,
-      { createDate: Date.now(), todo: inputValue, done: false },
-    ]);
+  // 清除已完成項目
+  const clearCompletedTodo = () => {
+    const newTodos = todos.filter((item) => !item.done);
+    setTodos(newTodos);
   };
 
-  //刪除Todo
-  const removeTodo = (e) => {
-    const id = e.target.dataset.id;
-    setTodos(todos.filter((todo) => todo.createDate != id));
-  };
+  //根據頁籤更換顯示todos
+  const filteredTodos = todos.filter((item) => {
+    if (currentTab === "pending") return !item.done;
+    if (currentTab === "completed") return item.done;
 
-  //監聽Todo的狀態
-  const handleTodoState = (id) => {
-    console.log(id);
-    // setTodos(
-    //   todos.map((todo) => {
-    //     todo.createDate == id
-    //       ? { createDate: todo.createDate, todo: todo.todo, done: !todo.done }
-    //       : todo;
-    //   })
-    // );
-  };
+    return item;
+  });
 
   return (
     <div className="todoList_Content">
-      <TodoInput
-        inputValue={inputValue}
-        setInputValue={setInputValue}
-        handleInputValue={handleInputValue}
-        addTodo={addTodo}
-      />
+      {/* newTodo */}
+      <TodoInput todos={todos} setTodos={setTodos} />
       <div className="todoList_list">
-        <ul className="todoList_tab">
-          <li>
-            <a href="#" className="active">
-              全部
-            </a>
-          </li>
-          <li>
-            <a href="#">待完成</a>
-          </li>
-          <li>
-            <a href="#">已完成</a>
-          </li>
-        </ul>
+        {/* TabType */}
+        <TabBar currentTab={currentTab} setCurrentTab={setCurrentTab} />
+        {/* TodoItem */}
         <div className="todoList_items">
           <ul className="todoList_item">
-            {todos.map((item) => {
-              return (
+            {todos.length > 0 ? (
+              filteredTodos.map((item, i) => (
                 <TodoItem
-                  key={item.createDate}
+                  key={i}
                   item={item}
                   todos={todos}
                   setTodos={setTodos}
-                  handleTodoState={handleTodoState}
-                  removeTodo={removeTodo}
                 />
-              );
-            })}
+              ))
+            ) : (
+              <li>
+                <label className="todoList_label">目前尚無代辦事項</label>
+              </li>
+            )}
           </ul>
           <div className="todoList_statistics">
-            <p>{todos.length}個已完成項目</p>
-            <a href="#">清除已完成項目</a>
+            <p> {completedTodo.length} 個已完成項目</p>
+            <a href="#" onClick={clearCompletedTodo}>
+              清除已完成項目
+            </a>
           </div>
         </div>
       </div>
@@ -134,18 +166,16 @@ const TodoList = function () {
 
 const App = function () {
   return (
-    <>
-      <div id="todoListPage" className="bg-half">
-        <nav>
-          <h1>
-            <a href="#">ONLINE TODO LIST</a>
-          </h1>
-        </nav>
-        <div className="conatiner todoListPage vhContainer">
-          <TodoList />
-        </div>
+    <div id="todoListPage" className="bg-half">
+      <nav>
+        <h1>
+          <a href="#">ONLINE TODO LIST</a>
+        </h1>
+      </nav>
+      <div className="conatiner todoListPage vhContainer">
+        <TodoList />
       </div>
-    </>
+    </div>
   );
 };
 
