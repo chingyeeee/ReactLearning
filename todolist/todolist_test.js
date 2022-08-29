@@ -137,9 +137,20 @@ const TodoList = function () {
         {/* TodoItem */}
         <div className="todoList_items">
           <ul className="todoList_item">
-            {filteredTodos.map((item, i) => (
-              <TodoItem key={i} item={item} todos={todos} setTodos={setTodos} />
-            ))}
+            {todos.length > 0 ? (
+              filteredTodos.map((item, i) => (
+                <TodoItem
+                  key={i}
+                  item={item}
+                  todos={todos}
+                  setTodos={setTodos}
+                />
+              ))
+            ) : (
+              <li>
+                <label className="todoList_label">目前尚無代辦事項</label>
+              </li>
+            )}
           </ul>
           <div className="todoList_statistics">
             <p> {completedTodo.length} 個已完成項目</p>
